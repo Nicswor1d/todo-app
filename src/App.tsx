@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useState } from "react";
+import { ChangeEventHandler, KeyboardEventHandler, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -8,6 +8,13 @@ function App() {
   const add = () => {
     setTodo([...todo, text]);
     setText("");
+  };
+
+  const keyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+    if (event.code === "Enter") {
+      console.log("Enter");
+      add();
+    }
   };
 
   const change: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -27,7 +34,12 @@ function App() {
       <button onClick={add} className="add-button">
         Hinzufügen
       </button>
-      <input type="text" onChange={change} value={text}></input>
+      <input
+        type="text"
+        onKeyDown={keyDown}
+        onChange={change}
+        value={text}
+      ></input>
     </>
   );
 }
